@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:priyo_quiz/constants/colors.dart';
 import 'package:priyo_quiz/services/navigation/navigation_service.dart';
 import 'package:priyo_quiz/services/navigation/route_aware.dart';
+import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/common/splash_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
 import 'package:priyo_quiz/utils/disable_glow.dart';
@@ -26,14 +27,15 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle.dark.copyWith(
         statusBarColor: Colors.transparent, // Color for Android
-        statusBarBrightness: Brightness.dark));
+        statusBarBrightness: Brightness.light));
 
     return MaterialApp(
       navigatorKey: locator<NavigationService>().navigatorKey,
       navigatorObservers: [RouteObserverX()],
       theme: ThemeData(
+        fontFamily: 'Poppins',
         appBarTheme: AppBarTheme(
-          color: ColorsX.primaryRed
+          color: ColorsX.white
         ),
         pageTransitionsTheme: PageTransitionsTheme(builders: {
           TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
@@ -57,7 +59,8 @@ class MyApp extends StatelessWidget {
         return Container();
       },
       routes: <String,WidgetBuilder>{
-        DashboardScreen.routeName: (ctx) => DashboardScreen()
+        DashboardScreen.routeName: (ctx) => DashboardScreen(),
+        LoginOptionsScreen.routeName: (ctx) => LoginOptionsScreen()
       },
       home: SplashScreen(),
     );

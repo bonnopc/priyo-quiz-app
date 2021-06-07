@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:priyo_quiz/constants/colors.dart';
+import 'package:priyo_quiz/utils/appbar.dart';
+import 'package:priyo_quiz/utils/button.dart';
 import 'package:priyo_quiz/utils/text.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -8,9 +11,17 @@ class DashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        child: xText(text: "Hello, User! It's your Dashboard!!"),
-    ));
+    return Scaffold(
+        appBar: pqAppbar(context, "Dashboard", false),
+        body: Center(
+          child: xText(text: "Hello"),
+        ),
+        bottomNavigationBar: SafeArea(child: Container(
+          color: ColorsX.primaryRed,
+          child: xButton(
+            label: "Bottom"
+          ),
+        )),
+      );
   }
 }

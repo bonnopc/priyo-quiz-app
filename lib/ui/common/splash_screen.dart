@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:priyo_quiz/constants/objects.dart';
+import 'package:priyo_quiz/constants/sharedpref_keys.dart';
 import 'package:priyo_quiz/services/navigation/navigation_service.dart';
 import 'package:priyo_quiz/services/shared_preference.dart';
+import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
 import 'package:priyo_quiz/utils/locator.dart';
 import 'package:priyo_quiz/utils/size_config.dart';
@@ -62,8 +64,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkUserStatus() async {
-    // check user info here
-    locator<NavigationService>().navigateTo(DashboardScreen.routeName, replace: true);
+    // check user info 
+    final prefs = SharedPreferenceManager.instance;
+    final bool userInfo = await prefs.contains(SharedPrefKeys.USER);
+
+    if(userInfo) locator<NavigationService>().navigateTo(DashboardScreen.routeName, replace: true);
+    else locator<NavigationService>().navigateTo(LoginOptionsScreen.routeName, replace: true);
   }
 
   @override
