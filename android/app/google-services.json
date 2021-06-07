@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "613200580039",
+    "project_id": "priyo-quiz",
+    "storage_bucket": "priyo-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:613200580039:android:1c9929df193b6551aa5de2",
+        "android_client_info": {
+          "package_name": "com.priyo.quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "613200580039-jcpcqqtfur3ia6te3hmandgs5fuhikes.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.priyo.quiz",
+            "certificate_hash": "e9ccb917db966c5967066c5b36cc14b5aa04bf49"
+          }
+        },
+        {
+          "client_id": "613200580039-9m49afvi3a11cmfa5ohe9bqfa02s6ccl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAz06pHQq7VIughXkUyP2HB5iDT6IBCJdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "613200580039-9m49afvi3a11cmfa5ohe9bqfa02s6ccl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
