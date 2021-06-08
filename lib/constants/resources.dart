@@ -1,4 +1,5 @@
 class Res {
+  static const String logo_square = "assets/icons/priyo_logo.png";
   static const String ic_back = "assets/icons/ic_back.svg";
   static const String ic_fb = "assets/icons/ic_fb.svg";
   static const String ic_google = "assets/icons/ic_google.png";

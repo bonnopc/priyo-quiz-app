@@ -7,7 +7,7 @@ import 'package:priyo_quiz/utils/text.dart';
 Widget xButton(
     {final String? label,
     final GestureTapCallback? onPressed,
-    final bool borderNone = true,
+    final bool hasBorder = false,
     final double? width,
     final double? height,
     final double radius = 40,
@@ -23,7 +23,7 @@ Widget xButton(
     final Widget? child,
     final Widget? icon}) {
   return Container(
-    decoration: borderNone
+    decoration: hasBorder
         ? BoxDecoration(
             border: strokeColor == null ? null : Border.all(color: strokeColor),
             borderRadius: BorderRadius.circular(radius),
@@ -37,7 +37,7 @@ Widget xButton(
             onTap: onPressed,
             child: Container(
               height: height ?? blocks.size(50),
-              width: width ?? blocks.size(84),
+              width: width ?? blocks.size(150),
               padding: padding,
               child: Center(
                 child: child ?? Row(

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:priyo_quiz/constants/colors.dart';
+import 'package:priyo_quiz/constants/objects.dart';
+import 'package:priyo_quiz/ui/auth/data/models/user.dart';
+import 'package:priyo_quiz/ui/auth/data/user_info.dart';
+import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/utils/appbar.dart';
 import 'package:priyo_quiz/utils/button.dart';
+import 'package:priyo_quiz/utils/loader.dart';
+import 'package:priyo_quiz/utils/locator.dart';
+import 'package:priyo_quiz/utils/margin.dart';
 import 'package:priyo_quiz/utils/text.dart';
 
 class DashboardScreen extends StatelessWidget {
@@ -12,16 +19,49 @@ class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: pqAppbar(context, "Dashboard", false),
-        body: Center(
-          child: xText(text: "Hello"),
-        ),
-        bottomNavigationBar: SafeArea(child: Container(
-          color: ColorsX.primaryRed,
-          child: xButton(
-            label: "Bottom"
+      appBar: pqAppbar(context, "Dashboard", false),
+      body: StreamBuilder(
+        stream: userInfo.userDetails,
+        builder: (ctx, AsyncSnapshot<UserProfile> snapshot){
+          if(snapshot.hasData && snapshot.data != null){
+            return _buildDashboard(snapshot.data,context);
+          } else if(!snapshot.hasData) {
+            return xText(text: "Login");
+          }
+
+          return Center(child: LoadingIndicator());
+        },
+      )
+    );
+  }
+
+  Widget _buildDashboard(UserProfile? user,BuildContext ctx){
+    return Align(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          xText(
+            text: "Hello, ${user?.userData?.profile?.name}",
           ),
-        )),
-      );
+          xText(
+            text: "Welcome to Priyo Quiz!".toUpperCase(),
+            fontSize: scale.size(18)
+          ),
+          margin(y: 100),
+          xButton(
+            label: "Logout",
+            icon: Icon(Icons.logout_outlined),
+            color: ColorsX.dimWhite,
+            textColor: ColorsX.textBlack,
+            onPressed: (){
+              Navigator.pushNamedAndRemoveUntil(ctx, 
+                LoginOptionsScreen.routeName, (route) => false);
+              userInfo.logout();
+            }
+          )
+        ],
+    ));
   }
 }

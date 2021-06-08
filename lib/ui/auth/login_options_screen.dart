@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:priyo_quiz/constants/colors.dart';
 import 'package:priyo_quiz/constants/objects.dart';
 import 'package:priyo_quiz/constants/resources.dart';
+import 'package:priyo_quiz/services/firebase_auth.dart';
+import 'package:priyo_quiz/services/navigation/navigation_service.dart';
+import 'package:priyo_quiz/ui/auth/cubit/authentication_cubit.dart';
+import 'package:priyo_quiz/ui/auth/verify_phone_screen.dart';
+import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
 import 'package:priyo_quiz/utils/appbar.dart';
 import 'package:priyo_quiz/utils/button.dart';
+import 'package:priyo_quiz/utils/loader.dart';
+import 'package:priyo_quiz/utils/locator.dart';
 import 'package:priyo_quiz/utils/margin.dart';
+import 'package:priyo_quiz/utils/navigation.dart';
+import 'package:priyo_quiz/utils/snackbar.dart';
 import 'package:priyo_quiz/utils/text.dart';
 
 class LoginOptionsScreen extends StatelessWidget {
@@ -13,46 +23,82 @@ class LoginOptionsScreen extends StatelessWidget {
 
   const LoginOptionsScreen({ Key? key }) : super(key: key);
 
+  // void _authWithFirebase(SocialLoginType type){
+  //   FirebaseAuthService().handleSignIn(type).then((value) => {
+  //     if(value != null){
+  //       print("Login success $value")
+  //     }
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorsX.primaryOrange,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: blocks.size(30),
-            right: blocks.size(30),
-            top: blocks.size(24),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Image.asset(
-                Res.img_man_perspective),
-              margin(y: 30),
-              xButton(
-                label: "Login with Facebook",
-                icon: SvgPicture.asset(Res.ic_fb, 
-                  height: scale.size(24)),
-                color: ColorsX.facebook,
-                onPressed: (){
-                  print("Login with facebook!!!");
+    return BlocProvider<AuthenticationCubit>(
+      create: (ctx) => AuthenticationCubit(),
+      child: Scaffold(
+        backgroundColor: ColorsX.white,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: blocks.size(30),
+            ),
+            child: BlocConsumer<AuthenticationCubit,AuthenticationState>(
+              listener: (_,state) {
+                if(state is AuthenticationSuccess){
+                  if(state.user?.userData?.isMobileVerified == true){
+                    Navigator.pushNamedAndRemoveUntil(
+                      context, DashboardScreen.routeName, (route) => false);
+                  } else {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context, VerifyPhoneScreen.routeName, (route) => false);
+                  }
+                  
+                } else if (state is AuthenticationError){
+                  showSnackBar("Something went wrong!");
                 }
-              ),
-              margin(y: 20),
-              xButton(
-                label: "Login with Google",
-                icon: Image.asset(Res.ic_google),
-                color: ColorsX.white,
-                textColor: ColorsX.textBlack,
-                onPressed: (){
-                  print("Login with google!!!");
+              },
+              builder: (ctx,state) {
+                if(state is AuthenticationLoading){
+                  return Center(
+                    child: LoadingIndicator(),
+                  );
                 }
-              )
-            ],
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      Res.logo_square, width: scale.size(60)),
+                    margin(y: 50),
+                    // xButton(
+                    //   label: "Login with Facebook",
+                    //   icon: SvgPicture.asset(Res.ic_fb, 
+                    //     height: scale.size(24)),
+                    //   color: ColorsX.facebook,
+                    //   onPressed: (){
+                    //     print("Login with facebook!!!");
+                    //   }
+                    // ),
+                    // margin(y: 20),
+                    xButton(
+                      label: "Login with Google",
+                      icon: Image.asset(Res.ic_google),
+                      color: ColorsX.white,
+                      textColor: ColorsX.textBlack,
+                      width: double.infinity,
+                      hasBorder: true,
+                      strokeColor: ColorsX.textHint,
+                      onPressed: (){
+                        ctx.read<AuthenticationCubit>()
+                          .handleSocialLogin(SocialLoginType.google);
+                      }
+                    )
+                  ],
+                );
+              })
           )
         )
-      )
-    );
+    ));
   }
 }

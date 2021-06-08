@@ -1,16 +1,21 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:priyo_quiz/constants/colors.dart';
 import 'package:priyo_quiz/constants/objects.dart';
 import 'package:priyo_quiz/constants/sharedpref_keys.dart';
 import 'package:priyo_quiz/services/navigation/navigation_service.dart';
 import 'package:priyo_quiz/services/shared_preference.dart';
+import 'package:priyo_quiz/ui/auth/cubit/authentication_cubit.dart';
+import 'package:priyo_quiz/ui/auth/data/user_info.dart';
 import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
 import 'package:priyo_quiz/utils/locator.dart';
 import 'package:priyo_quiz/utils/size_config.dart';
+import 'package:priyo_quiz/utils/text.dart';
 
 class SplashScreen extends StatefulWidget {
   static const routeName = '/splash';
@@ -22,7 +27,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
 
   _initSettings() {
     SharedPreferenceManager.instance.create();
@@ -32,9 +37,9 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _initPlatformState() async {
     try {
       if (Platform.isAndroid) {
-        // _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
+        _readAndroidBuildData(await deviceInfoPlugin.androidInfo);
       } else if (Platform.isIOS) {
-        // _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
+        _readIosDeviceInfo(await deviceInfoPlugin.iosInfo);
       }
     } on PlatformException {
       print("'Error:': 'Failed to get platform info.'");
@@ -55,6 +60,16 @@ class _SplashScreenState extends State<SplashScreen> {
         maxWidth: BlockConfiguration.screenWidth
       ),
     );
+  }
+
+  _readAndroidBuildData(AndroidDeviceInfo data) {
+    userInfo.deviceId = data.androidId;
+    userInfo.deviceType = "android";
+  }
+
+  _readIosDeviceInfo(IosDeviceInfo data) {
+    userInfo.deviceId = data.identifierForVendor;
+    userInfo.deviceType = "ios";
   }
 
   void _startTimer() {
@@ -87,8 +102,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("Splash Screen"),
+    return Scaffold(
+      backgroundColor: ColorsX.primaryOrange,
+      body: Center(
+        child: xText(
+          text: "Splash Screen",
+          color: ColorsX.white
+        ),
+      ),
     );
   }
 }
