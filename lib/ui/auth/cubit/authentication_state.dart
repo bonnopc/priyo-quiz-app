@@ -13,3 +13,10 @@ class AuthenticationSuccess extends AuthenticationState {
   List<dynamic> get props => [user];
 }
 class AuthenticationError extends AuthenticationState {}
+
+
+class CreateOtpLoading extends AuthenticationState {}
+class CreateOtpSuccess extends AuthenticationState {}
+class VerifyOtpSuccess extends AuthenticationState {}
+class CreateOtpError extends AuthenticationState {}
+

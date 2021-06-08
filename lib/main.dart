@@ -5,7 +5,6 @@ import 'package:priyo_quiz/constants/colors.dart';
 import 'package:priyo_quiz/services/navigation/navigation_service.dart';
 import 'package:priyo_quiz/services/navigation/route_aware.dart';
 import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
-import 'package:priyo_quiz/ui/auth/verify_otp_screen.dart';
 import 'package:priyo_quiz/ui/auth/verify_phone_screen.dart';
 import 'package:priyo_quiz/ui/common/splash_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
@@ -64,7 +63,6 @@ class MyApp extends StatelessWidget {
         DashboardScreen.routeName: (ctx) => DashboardScreen(),
         LoginOptionsScreen.routeName: (ctx) => LoginOptionsScreen(),
         VerifyPhoneScreen.routeName: (ctx) => VerifyPhoneScreen(),
-        VerifyOtpScreen.routeName: (ctx) => VerifyOtpScreen()
       },
       home: SplashScreen(),
     );

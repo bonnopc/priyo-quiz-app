@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -10,6 +11,7 @@ import 'package:priyo_quiz/constants/sharedpref_keys.dart';
 import 'package:priyo_quiz/services/navigation/navigation_service.dart';
 import 'package:priyo_quiz/services/shared_preference.dart';
 import 'package:priyo_quiz/ui/auth/cubit/authentication_cubit.dart';
+import 'package:priyo_quiz/ui/auth/data/models/user.dart';
 import 'package:priyo_quiz/ui/auth/data/user_info.dart';
 import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
@@ -81,9 +83,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _checkUserStatus() async {
     // check user info 
     final prefs = SharedPreferenceManager.instance;
-    final bool userInfo = await prefs.contains(SharedPrefKeys.USER);
+    final bool _hasUserInfo = await prefs.contains(SharedPrefKeys.USER);
 
-    if(userInfo) locator<NavigationService>().navigateTo(DashboardScreen.routeName, replace: true);
+    if(_hasUserInfo){
+      final _userInfo = await prefs.getString(SharedPrefKeys.USER);
+      userInfo.setUserStream(UserProfile.fromJson(json.decode(_userInfo)));
+      
+      locator<NavigationService>().navigateTo(DashboardScreen.routeName, replace: true);
+    }
     else locator<NavigationService>().navigateTo(LoginOptionsScreen.routeName, replace: true);
   }
 

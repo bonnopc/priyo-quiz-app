@@ -20,6 +20,8 @@ String? getSocialProviderNameFromType(SocialLoginType type) {
 }
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
+  final _provider = AuthDataProvider();
+
   AuthenticationCubit() : super(AuthenticationInitial());
 
   Future<void> handleSocialLogin(SocialLoginType type) async {
@@ -33,7 +35,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         final String? clientType = userInfo.getDeviceType();
         final String? provider = getSocialProviderNameFromType(type);
 
-        final UserProfile? _user = await AuthDataProvider().handleSocialSignIn(
+        final UserProfile? _user = await _provider.handleSocialSignIn(
           authResponse.idToken, deviceId, clientType, provider);
 
         if(_user != null){
@@ -50,6 +52,31 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     } catch (e) {
       print("Error on handleSocialLogin in AuthenticationCubit $e");
       emit(AuthenticationError());
+    }
+  }
+
+  Future<void> createOtpOrVerify({
+    String? phoneNo, String? otp
+  }) async {
+    try {
+      emit(CreateOtpLoading());
+
+      final _phone = phoneNo?.length == 11 ? phoneNo?.substring(1) : phoneNo;
+
+      final bool? otpResponse = await _provider.createOtpOrVerify(
+        phoneNo: _phone,
+        otp: otp
+      );
+
+      if(otpResponse == true){
+        if(otp != null) emit(VerifyOtpSuccess());
+        else emit(CreateOtpSuccess());
+      }
+      else emit(CreateOtpError());
+
+    } catch (e) {
+      print("Error on createOtp in AuthenticationCubit $e");
+      emit(CreateOtpError());
     }
   }
 }

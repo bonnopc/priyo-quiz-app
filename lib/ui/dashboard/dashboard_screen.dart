@@ -4,6 +4,7 @@ import 'package:priyo_quiz/constants/objects.dart';
 import 'package:priyo_quiz/ui/auth/data/models/user.dart';
 import 'package:priyo_quiz/ui/auth/data/user_info.dart';
 import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
+import 'package:priyo_quiz/ui/auth/verify_phone_screen.dart';
 import 'package:priyo_quiz/utils/appbar.dart';
 import 'package:priyo_quiz/utils/button.dart';
 import 'package:priyo_quiz/utils/loader.dart';
@@ -23,10 +24,9 @@ class DashboardScreen extends StatelessWidget {
       body: StreamBuilder(
         stream: userInfo.userDetails,
         builder: (ctx, AsyncSnapshot<UserProfile> snapshot){
+          print("snapshot.data ===> ${snapshot.data}");
           if(snapshot.hasData && snapshot.data != null){
             return _buildDashboard(snapshot.data,context);
-          } else if(!snapshot.hasData) {
-            return xText(text: "Login");
           }
 
           return Center(child: LoadingIndicator());
@@ -50,6 +50,15 @@ class DashboardScreen extends StatelessWidget {
             fontSize: scale.size(18)
           ),
           margin(y: 100),
+          xButton(
+            label: "Verify Phone",
+            color: ColorsX.dimWhite,
+            textColor: ColorsX.textBlack,
+            onPressed: (){
+              Navigator.pushNamed(ctx, VerifyPhoneScreen.routeName);
+            }
+          ),
+          margin(y: 15),
           xButton(
             label: "Logout",
             icon: Icon(Icons.logout_outlined),

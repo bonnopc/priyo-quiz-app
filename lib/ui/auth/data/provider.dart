@@ -34,4 +34,26 @@ class AuthDataProvider {
       CustomHttpException(e.toString());
     }
   }
+
+  Future<bool?> createOtpOrVerify({
+    String? phoneNo, String? otp
+    }) async {
+    try {
+      final url = "$authBaseUrl/auth/api/v1/update-email-phone/";
+      final response = await HttpClient().postRequest(
+        url, 
+        body: {
+          "mobile": phoneNo,
+          "code": otp
+        }
+      );
+
+      if(response.statusCode == 200) return true;
+      return false;
+
+    } catch (e) {
+      print("Error on google sign-in through API $e");
+      CustomHttpException(e.toString());
+    }
+  }
 }

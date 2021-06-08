@@ -33,15 +33,22 @@ class UserInfo {
 
   void saveUserData(UserProfile userData) {
     print("SAVEUSER");
+    final pref = SharedPreferenceManager.instance;
     _userDetails.sink.add(userData);
-    SharedPreferenceManager.instance
-        .setString(SharedPrefKeys.USER, json.encode(userData));
+    pref.setString(SharedPrefKeys.ACCESS_TOKEN, "${userData.token}");
+    pref.setString(SharedPrefKeys.USER, json.encode(userData));
+  }
+
+  void setUserStream(UserProfile userData) {
+    _userDetails.sink.add(userData);
   }
 
   Future<void> logout() async {
     _cleanUserStream();
-    SharedPreferenceManager.instance.remove(SharedPrefKeys.USER);
-    SharedPreferenceManager.instance.clear();
+    final pref = SharedPreferenceManager.instance;
+    pref.remove(SharedPrefKeys.USER);
+    pref.remove(SharedPrefKeys.ACCESS_TOKEN);
+    pref.clear();
     
     await FirebaseAuth.instance.signOut();
 

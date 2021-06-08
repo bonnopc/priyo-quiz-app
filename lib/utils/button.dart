@@ -20,6 +20,7 @@ Widget xButton(
     final Color? strokeColor,
     final MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center,
     final EdgeInsets? padding,
+    final bool isDisabled = false,
     final Widget? child,
     final Widget? icon}) {
   return Container(
@@ -32,7 +33,7 @@ Widget xButton(
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius),
       child: Material(
-          color: color ?? ColorsX.primaryRed,
+          color: isDisabled ? ColorsX.dimWhite : color ?? ColorsX.primaryRed,
           child: InkWell(
             onTap: onPressed,
             child: Container(
@@ -54,7 +55,7 @@ Widget xButton(
                     margin(x: icon != null ? 14 : 0),
                     xText(
                       text: label != null ? label.toUpperCase() : "",
-                      color: textColor ?? Colors.white,
+                      color: isDisabled ? ColorsX.lightGrey : textColor ?? Colors.white,
                       fontWeight: fontWeight ?? FontWeight.w600,
                       fontSize: scale.size(fontSize ?? 14),
                       textAlign: TextAlign.center,
