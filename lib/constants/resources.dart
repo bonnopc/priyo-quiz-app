@@ -5,4 +5,5 @@ class Res {
   static const String ic_google = "assets/icons/ic_google.png";
 
   static const String img_man_perspective = "assets/images/man-perspective.png";
+  static const String img_dummy_url = "https://img.priyo.com/files/201611/priyo-dot-com-logo_1200_630.jpg";
 }

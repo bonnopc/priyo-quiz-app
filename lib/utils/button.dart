@@ -33,7 +33,7 @@ Widget xButton(
     child: ClipRRect(
       borderRadius: BorderRadius.circular(radius),
       child: Material(
-          color: isDisabled ? ColorsX.dimWhite : color ?? ColorsX.primaryRed,
+          color: isDisabled ? ColorsX.dimWhite : color ?? ColorsX.primaryOrange,
           child: InkWell(
             onTap: onPressed,
             child: Container(

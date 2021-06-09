@@ -10,9 +10,7 @@ class HttpClient {
     Object? body,
     // Map<String, String>? headers
   }) async {
-    // final parsedUri = Uri.parse(url);
     log("POST URL: $url, Body: $body");
-    // return http.post(parsedUri,body:body,headers: headers);
     final String? _token = await SharedPreferenceManager
       .instance.getString(SharedPrefKeys.ACCESS_TOKEN);
 
@@ -27,6 +25,26 @@ class HttpClient {
         url, 
         data: body
       );
+    } catch (e) {
+      throw HttpException("$e");
+    }
+  }
+
+  Future<Response<dynamic>> getRequest(String url, {
+    Object? body,
+    // Map<String, String>? headers
+  }) async {
+    log("GET URL: $url");
+    final String? _token = await SharedPreferenceManager
+      .instance.getString(SharedPrefKeys.ACCESS_TOKEN);
+
+    try {
+      final dio = Dio();
+      if(_token != null && _token.isNotEmpty){
+        dio.options.headers['authorization'] = "token $_token";
+      }
+
+      return await dio.get(url);
     } catch (e) {
       throw HttpException("$e");
     }

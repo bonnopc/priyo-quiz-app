@@ -8,6 +8,8 @@ import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/auth/verify_phone_screen.dart';
 import 'package:priyo_quiz/ui/common/splash_screen.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
+import 'package:priyo_quiz/ui/quiz_list/quiz_list_screen.dart';
+import 'package:priyo_quiz/ui/quiz_list/winner_list_screen.dart';
 import 'package:priyo_quiz/utils/disable_glow.dart';
 import 'package:priyo_quiz/utils/locator.dart';
 
@@ -63,6 +65,8 @@ class MyApp extends StatelessWidget {
         DashboardScreen.routeName: (ctx) => DashboardScreen(),
         LoginOptionsScreen.routeName: (ctx) => LoginOptionsScreen(),
         VerifyPhoneScreen.routeName: (ctx) => VerifyPhoneScreen(),
+        QuizListScreen.routeName: (ctx) => QuizListScreen(),
+        WinnerListScreen.routeName: (ctx) => WinnerListScreen(),
       },
       home: SplashScreen(),
     );

@@ -9,7 +9,7 @@ class ColorsX {
   static const Color darkGrey = Color(0xff676767);
   static const Color lightGrey = Color(0xffB2BEC3);
   static const Color dimWhite = Color(0xfff1f1f1);
-  static const Color success = Color(0xff00b424);
+  static const Color success = Color(0xff05c46b);
 
   static const Color stroke = Color(0xffE5E5E5);
   static const Color error = Color(0xffF14336);

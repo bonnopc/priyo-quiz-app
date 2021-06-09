@@ -5,6 +5,7 @@ import 'package:priyo_quiz/ui/auth/data/models/user.dart';
 import 'package:priyo_quiz/ui/auth/data/user_info.dart';
 import 'package:priyo_quiz/ui/auth/login_options_screen.dart';
 import 'package:priyo_quiz/ui/auth/verify_phone_screen.dart';
+import 'package:priyo_quiz/ui/quiz_list/quiz_list_screen.dart';
 import 'package:priyo_quiz/utils/appbar.dart';
 import 'package:priyo_quiz/utils/button.dart';
 import 'package:priyo_quiz/utils/loader.dart';
@@ -38,39 +39,45 @@ class DashboardScreen extends StatelessWidget {
   Widget _buildDashboard(UserProfile? user,BuildContext ctx){
     return Align(
       alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          xText(
-            text: "Hello, ${user?.userData?.profile?.name}",
-          ),
-          xText(
-            text: "Welcome to Priyo Quiz!".toUpperCase(),
-            fontSize: scale.size(18)
-          ),
-          margin(y: 100),
-          // xButton(
-          //   label: "Verify Phone",
-          //   color: ColorsX.dimWhite,
-          //   textColor: ColorsX.textBlack,
-          //   onPressed: (){
-          //     Navigator.pushNamed(ctx, VerifyPhoneScreen.routeName);
-          //   }
-          // ),
-          // margin(y: 15),
-          xButton(
-            label: "Logout",
-            icon: Icon(Icons.logout_outlined),
-            color: ColorsX.dimWhite,
-            textColor: ColorsX.textBlack,
-            onPressed: (){
-              Navigator.pushNamedAndRemoveUntil(ctx, 
-                LoginOptionsScreen.routeName, (route) => false);
-              userInfo.logout();
-            }
-          )
-        ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: blocks.size(20)
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            xText(
+              text: "Hello, ${user?.userData?.profile?.name}",
+            ),
+            xText(
+              text: "Welcome to Priyo Quiz!".toUpperCase(),
+              fontSize: scale.size(18)
+            ),
+            margin(y: 100),
+            xButton(
+              label: "Previous Quizzes",
+              icon: Icon(Icons.dns_outlined, color: ColorsX.white),
+              width: double.infinity,
+              onPressed: (){
+                Navigator.pushNamed(ctx, QuizListScreen.routeName);
+              }
+            ),
+            margin(y: 20),
+            xButton(
+              label: "Logout",
+              icon: Icon(Icons.logout_outlined),
+              width: double.infinity,
+              color: ColorsX.dimWhite,
+              textColor: ColorsX.textBlack,
+              onPressed: (){
+                Navigator.pushNamedAndRemoveUntil(ctx, 
+                  LoginOptionsScreen.routeName, (route) => false);
+                userInfo.logout();
+              }
+            )
+          ],
+        ),
     ));
   }
 }
