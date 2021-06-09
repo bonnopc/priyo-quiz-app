@@ -39,15 +39,15 @@ PreferredSizeWidget pqAppbar(BuildContext context, String title, bool showBack,
                 })
             : null,
         centerTitle: true,
-        brightness: Brightness.light,
-        backgroundColor: ColorsX.white,
+        brightness: Brightness.dark,
+        backgroundColor: ColorsX.primaryOrange,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildTitle ??
                 xText(
                     text: title,
-                    color: ColorsX.textBlack,
+                    color: ColorsX.white,
                     fontSize: scale.size(16),
                     fontWeight: FontWeight.w800),
           ],
