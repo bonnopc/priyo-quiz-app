@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:priyo_quiz/constants/colors.dart';
 import 'package:priyo_quiz/constants/objects.dart';
+import 'package:priyo_quiz/constants/sharedpref_keys.dart';
+import 'package:priyo_quiz/services/shared_preference.dart';
 import 'package:priyo_quiz/ui/auth/cubit/authentication_cubit.dart';
 import 'package:priyo_quiz/ui/dashboard/dashboard_screen.dart';
 import 'package:priyo_quiz/utils/button.dart';
@@ -27,8 +31,15 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
 
   @override
   void initState() {
+    logToken();
     super.initState();
+    
     otpFocusNode = FocusNode();
+  }
+
+  void logToken() async {
+    final _token = await SharedPreferenceManager.instance.getString(SharedPrefKeys.ACCESS_TOKEN);
+    log(_token);
   }
 
   @override
@@ -41,7 +52,7 @@ class _VerifyPhoneScreenState extends State<VerifyPhoneScreen> {
 
   bool isValidInput(){
     final _phoneNo = textController.text;
-    final _otp = textController.text;
+    final _otp = otpController.text;
     // print("phoneNo.length >= 10 ${phoneNo.length >= 10}");
     if(!isCreatedOtp) return _phoneNo.length >= 10;
     else return isCreatedOtp && _phoneNo.length >= 10 && _otp.length == 6;

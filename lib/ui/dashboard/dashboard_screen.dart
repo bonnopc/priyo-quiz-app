@@ -50,15 +50,15 @@ class DashboardScreen extends StatelessWidget {
             fontSize: scale.size(18)
           ),
           margin(y: 100),
-          xButton(
-            label: "Verify Phone",
-            color: ColorsX.dimWhite,
-            textColor: ColorsX.textBlack,
-            onPressed: (){
-              Navigator.pushNamed(ctx, VerifyPhoneScreen.routeName);
-            }
-          ),
-          margin(y: 15),
+          // xButton(
+          //   label: "Verify Phone",
+          //   color: ColorsX.dimWhite,
+          //   textColor: ColorsX.textBlack,
+          //   onPressed: (){
+          //     Navigator.pushNamed(ctx, VerifyPhoneScreen.routeName);
+          //   }
+          // ),
+          // margin(y: 15),
           xButton(
             label: "Logout",
             icon: Icon(Icons.logout_outlined),

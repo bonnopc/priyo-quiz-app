@@ -64,12 +64,12 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       final _phone = phoneNo?.length == 11 ? phoneNo?.substring(1) : phoneNo;
 
       final bool? otpResponse = await _provider.createOtpOrVerify(
-        phoneNo: _phone,
+        phoneNo: "+880$_phone",
         otp: otp
       );
 
       if(otpResponse == true){
-        if(otp != null) emit(VerifyOtpSuccess());
+        if(otp != null && otp.isNotEmpty) emit(VerifyOtpSuccess());
         else emit(CreateOtpSuccess());
       }
       else emit(CreateOtpError());

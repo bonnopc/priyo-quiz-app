@@ -42,10 +42,10 @@ class AuthDataProvider {
       final url = "$authBaseUrl/auth/api/v1/update-email-phone/";
       final response = await HttpClient().postRequest(
         url, 
-        body: {
+        body: otp != null && otp.isNotEmpty ? {
           "mobile": phoneNo,
           "code": otp
-        }
+        } : { "mobile": phoneNo }
       );
 
       if(response.statusCode == 200) return true;

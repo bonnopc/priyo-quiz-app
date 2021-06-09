@@ -70,7 +70,13 @@ class LoginOptionsScreen extends StatelessWidget {
                   children: [
                     Image.asset(
                       Res.logo_square, width: scale.size(60)),
-                    margin(y: 50),
+                    xText(
+                      text: "Priyo Quiz",
+                      fontSize: scale.size(18),
+                      color: ColorsX.primaryRed,
+                      fontWeight: FontWeight.w600
+                    ),
+                    margin(y: 80),
                     // xButton(
                     //   label: "Login with Facebook",
                     //   icon: SvgPicture.asset(Res.ic_fb, 

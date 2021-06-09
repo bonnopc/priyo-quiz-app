@@ -38,7 +38,7 @@ Widget xButton(
             onTap: onPressed,
             child: Container(
               height: height ?? blocks.size(50),
-              width: width ?? blocks.size(150),
+              width: width ?? blocks.size(160),
               padding: padding,
               child: Center(
                 child: child ?? Row(
